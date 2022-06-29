@@ -1,0 +1,17 @@
+
+public aspect Aspect1 {
+
+    pointcut Pop(): call(* Stack.pop());
+    pointcut Top(): call(* Stack.top());
+
+
+    before() : Pop() {
+        System.out.println("Before call sayHello");
+    }
+    
+    before() : Top() {
+        System.out.println("Before call sayHello");
+    }
+
+
+}
