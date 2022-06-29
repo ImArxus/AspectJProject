@@ -1,0 +1,47 @@
+
+public aspect Aspect2 {
+	
+
+    pointcut Pop(Stack stack): call(* *.pop()) && target(stack);
+
+    pointcut Push(Stack stack, int i): call(* *.push(int)) && args(i) && target(stack);
+    
+    int size;
+
+
+    before(Stack stack) : Pop(stack) {
+        System.out.println("This is supposed size  " + size);
+
+    	size = stack.size();
+
+    }
+    
+    after(Stack stack) : Pop(stack) {
+    	size = size - 1;
+    	if(stack.size() != size) {
+    	
+        System.out.println("Erreur de la propriété 2");
+    	}
+    }
+    
+    before(Stack stack, int i) : Push( stack,  i) {
+        System.out.println("This is supposed size  " + size);
+
+    	size = stack.size();
+
+    }
+    
+    after(Stack stack, int i) : Push( stack,  i) {
+    	size = size + 1;
+        System.out.println("This is supposed size  " + size);
+        System.out.println("This is real size  " + stack.size());
+
+    	if(stack.size() != size) {
+        System.out.println("Erreur de la propriété 2");
+    	}
+    }
+
+    
+    
+
+}

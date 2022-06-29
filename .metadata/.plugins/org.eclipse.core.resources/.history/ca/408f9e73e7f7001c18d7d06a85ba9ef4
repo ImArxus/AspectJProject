@@ -1,0 +1,31 @@
+
+public aspect Aspect1 {
+
+    pointcut Pop(Stack stack): call(* *.pop()) && target(stack);
+    pointcut Popy(): call(**.pop());
+
+    pointcut Top(Stack stack): call(**.top()) && target(stack);
+
+
+    before(Stack stack) : Pop(stack) {
+    	if(stack.isEmpty()) {
+        System.out.println("Erreur de la propriété 1");
+
+    	}
+        System.out.println(" heyas");
+
+    }
+    
+    before(): Popy(){
+        System.out.println(" heya");
+
+    }
+    
+    before(Stack stack) : Top(stack) {
+    	if(stack.isEmpty()) {
+            System.out.println("Erreur de la propriété 1");
+        	}
+    }
+
+
+}

@@ -1,0 +1,15 @@
+/****************
+ * Monitoring d'appels de méthodes: exemple de la pile
+ * 
+ * Cours: 8INF958
+ * 
+ * Auteur: Klaus Havelund
+ ****************/
+
+class Test {
+	public static void main(String[] args) {
+		
+		
+		System.out.print("hey");
+	}
+}
