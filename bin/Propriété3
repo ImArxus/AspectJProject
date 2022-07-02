@@ -1,0 +1,15 @@
+PROTOTYPES
+
+void Bank.open(int act);
+void Bank.close(int ac);
+void Bank.withdraw(int act, int amount);
+boolean Bank.isApproved(int act, int amt);
+
+SPEC LTL-FO+
+G (!(([m1 /call/method] ((m1) = ({withdraw})) &
+  ([a1 /call/act/value] ((a1) > 1000)))) U
+  (G ([m2 /call/method] ((m2) = ({isApproved})))))
+
+@FALSE {
+  System.out.println("Un retrait de plus de 1000$ doit être approuvé");
+}

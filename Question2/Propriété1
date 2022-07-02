@@ -1,0 +1,15 @@
+PROTOTYPES
+
+void Bank.open(int act);
+void Bank.close(int ac);
+void Bank.withdraw(int act, int amount);
+boolean Bank.isApproved(int act, int amt);
+
+SPEC LTL-FO+
+G (((!([m1 /call/method] ((m1) = ({withdraw})))) & 
+  (!([m2 /call/method] ((m2) = ({isApproved}))))) U 
+  ([m3 /call/method] ((m3) = ({open})))
+
+@FALSE {
+  System.out.println("Il n'est pas possible de faire un retrait ou d'approuver une opération si un compte n'est pas ouvert");
+}

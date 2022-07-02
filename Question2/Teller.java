@@ -10,6 +10,7 @@
 import java.io.*;
 
 public class Teller {
+	@SuppressWarnings("removal")
 	public static void main(String[] args) {
 		Bank b = new Bank();
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

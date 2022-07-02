@@ -1,0 +1,15 @@
+PROTOTYPES
+
+void Bank.open(int act);
+void Bank.close(int ac);
+void Bank.withdraw(int act, int amount);
+boolean Bank.isApproved(int act, int amt);
+
+SPEC LTL-FO+
+G (([m1 /call/method] ((m1) = ({open}))) -> 
+  (G ((!(m1)) U
+  ([m2 /call/method] ((m2) = ({close})))))
+
+@FALSE {
+  System.out.println("Il n'est pas possible d'ouvrir plus d'un compte à la fois");
+}
