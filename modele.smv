@@ -1,0 +1,46 @@
+MODULE main
+
+VAR 
+	location : {at_w, at_e, on_bridge};
+	w_light : {red, green};
+	e_light : {red, green};
+	time : 0 .. 3;
+
+ASSIGN
+	init(location) := at_w;
+	init(w_light) := green;
+	init(e_light) := red;
+	init(time) := 0;
+	next(location) := case
+		(location = at_w) & (w_light = green) : on_bridge;
+		(location = at_e) & (e_light = green) : on_bridge;
+		(location = on_bridge) & (w_light = green) : at_e;
+		(location = on_bridge) & (e_light = green) : at_w;
+		TRUE : location;
+		esac;
+	next(w_light) := case
+		(w_light = green) & (time = 3) : red;
+		(location = at_w) & (e_light = red) : green;
+		TRUE : w_light;
+		esac;
+	next(e_light) := case
+		(e_light = green) & (time = 3) : red;
+		(location = at_e) & (w_light = red) : green;
+		TRUE : e_light;
+		esac;
+	next(time) := case
+		(time = 3) : 0;
+		(time < 3) : time + 1;
+		TRUE : time;
+		esac;
+
+LTLSPEC
+	G((e_light = green & w_light = red) | (e_light = red & w_light = green) | (e_light = red & w_light = red)) &
+	G(!(e_light = green & (X(e_light = green & X(e_light = green & X(e_light = green)))))) &
+	G(location = at_e -> F(e_light = green)) & G(location = at_w -> F(w_light = green)) &
+	G(((location = on_bridge & e_light = red) -> !X(e_light = green)) & ((location = on_bridge & w_light = red) -> !X(w_light = green))) &
+	G((e_light = green -> X(location = on_bridge)) | ((w_light = green -> X(location = on_bridge))))
+
+CTLSPEC
+	EG(!(location = at_e) & !(location = at_w)) &
+	AG(((location = at_e) -> (EF(e_light = green))) | ((location = at_w) -> (EF(w_light = green))))
